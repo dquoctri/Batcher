@@ -1,6 +1,8 @@
 package com.dqtri.batcher.batch.controller;
 
 import com.dqtri.batcher.annotation.DemoTag;
+import com.dqtri.batcher.audit.ActionType;
+import com.dqtri.batcher.audit.AuditAction;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +38,7 @@ public class BatchJobController implements BatchJobOperations {
 
     @DemoTag(value = "Demo 003", description = "Launch from an HTTP request")
     @Override
+    @AuditAction(value = "TRIGGER_BATCH_JOB", type = ActionType.REST)
     public void triggerBatchJob(String name, Map<String, String> params) throws Exception{
         try {
             Job jobToRun = applicationContext.getBean(name, Job.class);
@@ -47,9 +50,11 @@ public class BatchJobController implements BatchJobOperations {
 
     @DemoTag(value = "Demo 004", description = "Running Jobs asynchronously")
     @Override
+    @AuditAction(value = "TRIGGER_BATCH_JOB_ASYNC", type = ActionType.REST)
     public void triggerBatchJobAsync(String name, Map<String, String> params) throws Exception {
         try {
             Job jobToRun = applicationContext.getBean(name, Job.class);
+            //AuditInfo audit = AuditInfoHolder.getInstance().getCurrent();
             taskExecutorJobLauncher.run(jobToRun, buildJobParameters(jobToRun, params));
         } catch (BeansException ex) {
             throw new EntityNotFoundException(String.format(NOT_FOUND_JOB_NAME_MSG, name));
@@ -70,6 +75,7 @@ public class BatchJobController implements BatchJobOperations {
 
     @DemoTag(value = "Demo 005", description = "Job Operator CRUD and stop a job")
     @Override
+    @AuditAction(value = "INTERRUPT_BATCH_JOB", type = ActionType.REST)
     public boolean interruptBatchJob(String name) throws Exception {
         log.info(String.format("Interrupt batch job [%s]", name));
         try {

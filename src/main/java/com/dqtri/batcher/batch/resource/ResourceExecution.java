@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class ResourceExecution {
-    public static final String JOB_NAME = "notificationExecutionJob";
+    public static final String JOB_NAME = "resourceJob";
 
     @Value("${batch-job.resource.chunk-size:10}")
     private final int chunkSize = 10;

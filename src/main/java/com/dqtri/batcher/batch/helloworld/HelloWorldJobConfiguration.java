@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.dqtri.batcher.utils.ISO8601DateSerializer.ISO8601_DATE_PATTERN;
+import static com.dqtri.batcher.annotation.utils.ISO8601DateSerializer.ISO8601_DATE_PATTERN;
 
 @Slf4j
 @Configuration

@@ -1,6 +1,10 @@
 package com.dqtri.batcher.batch.config;
 
 import com.dqtri.batcher.annotation.DemoTag;
+import com.dqtri.batcher.audit.ActionType;
+import com.dqtri.batcher.audit.AuditAction;
+import com.dqtri.batcher.audit.AuditInfo;
+import com.dqtri.batcher.audit.AuditInfoHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.explore.JobExplorer;
@@ -11,6 +15,7 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskDecorator;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.interceptor.TransactionProxyFactoryBean;
 
@@ -24,6 +29,7 @@ public class BatchJobConfiguration {
 
     @DemoTag(value = "Demo 002", description = "demo job luncher")
     @Bean
+    @AuditAction(value = "TESTING", type = ActionType.SYSTEM)
     public TaskExecutorJobLauncher taskExecutorJobLauncher(JobRepository jobRepository, SimpleAsyncTaskExecutor simpleAsyncTaskExecutor) throws Exception {
         TaskExecutorJobLauncher jobLauncher = new TaskExecutorJobLauncher();
         jobLauncher.setJobRepository(jobRepository);
@@ -38,6 +44,16 @@ public class BatchJobConfiguration {
         simpleAsyncTaskExecutor.setTaskTerminationTimeout(144);
         simpleAsyncTaskExecutor.setConcurrencyLimit(5);
         simpleAsyncTaskExecutor.setThreadPriority(MIN_PRIORITY);
+//        simpleAsyncTaskExecutor.setTaskDecorator(new TaskDecorator() {
+//            @Override
+//            public Runnable decorate(Runnable runnable) {
+//                AuditInfo audit = AuditInfoHolder.getInstance().getCurrent();
+//                return () -> {
+//                    AuditInfoHolder.getInstance().setCurrentContext(audit);
+//                    runnable.run();
+//                };
+//            }
+//        });
         return simpleAsyncTaskExecutor;
     }
 

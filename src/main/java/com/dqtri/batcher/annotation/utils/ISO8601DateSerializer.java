@@ -1,4 +1,4 @@
-package com.dqtri.batcher.utils;
+package com.dqtri.batcher.annotation.utils;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

@@ -13,6 +13,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +39,17 @@ import java.io.Serializable;
 @Audited
 @Entity
 @Table(name = "resource")
+@NamedQueries({
+        @NamedQuery(
+                name = "Resource.findAllResources",
+                query = "SELECT r FROM Resource r"),
+})
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "Resource.countAllResourcesWithSQL",
+                query = "SELECT * FROM dqtri.resource r",
+                resultClass = Resource.class)
+})
 public class Resource implements Serializable {
 
     @Id

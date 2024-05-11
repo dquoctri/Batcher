@@ -1,5 +1,7 @@
 package com.dqtri.batcher.batch.helloworld;
 
+import com.dqtri.batcher.audit.ActionType;
+import com.dqtri.batcher.audit.AuditAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -20,6 +22,7 @@ public class JobScheduler {
     private final JobLauncher jobLauncher;
 
     @Scheduled(cron = "0 0 0 * * *")
+    @AuditAction(value = "FIRSTJOB_Scheduled", type = ActionType.SCHEDULER)
     public void scheduled() throws Exception {
         Date now = new Date();
         log.info(String.format("Book Entity Job scheduled at: %s", now));

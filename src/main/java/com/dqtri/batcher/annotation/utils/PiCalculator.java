@@ -1,4 +1,4 @@
-package com.dqtri.batcher.utils;
+package com.dqtri.batcher.annotation.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
