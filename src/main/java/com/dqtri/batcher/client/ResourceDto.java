@@ -2,6 +2,7 @@ package com.dqtri.batcher.client;
 
 import com.dqtri.batcher.model.Resource;
 import com.dqtri.batcher.model.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,20 +16,21 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ResourceDto {
-    private Long pk;
+    private Long id;
     private String content;
     private Status status = Status.ACTIVE;
 
     public ResourceDto(Resource resource) {
-        this.pk = resource.getPk();
+        this.id = resource.getPk();
         this.content = resource.getContent();
         this.status = resource.getStatus();
     }
 
     public Resource toResource(){
         Resource resource = new Resource();
-        resource.setPk(this.pk);
+        resource.setPk(this.id);
         resource.setContent(this.content);
         resource.setStatus(this.status);
         return resource;

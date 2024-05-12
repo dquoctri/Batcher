@@ -7,7 +7,7 @@
   {
     "id": 2,
     "content": "Resource {{hostname}}",
-    "status": "{{{pickRandom 'DELETED' 'BLOCKED' 'ACTIVE'}}}"
+    "status": "{{{pickRandom 'DELETED' 'LOCKED' 'ACTIVE'}}}"
   },
   {
     "id": 3,
@@ -22,7 +22,7 @@
   {
     "id": 5,
     "content": "Resource {{random 'PhoneNumber.phone_number' }}",
-    "status": "BLOCKED"
+    "status": "LOCKED"
   },
   {
     "id": 6,
