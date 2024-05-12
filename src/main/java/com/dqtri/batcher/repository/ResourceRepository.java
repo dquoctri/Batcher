@@ -18,11 +18,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
 
-    @Query("SELECT s FROM Resource s " +
-            "WHERE :status is null or s.status = :status")
+    @Query(value = "SELECT r FROM Resource r " +
+            "WHERE :status is null or r.status = :status",
+        countQuery = "SELECT COUNT(r.pk) FROM Resource r " +
+                "WHERE :status IS NULL OR r.status = :status"
+    )
     Page<Resource> findByStatus(@Param("status") Status status, Pageable pageable);
 
     @Query(value = "SELECT s.pk, s.content, s.status FROM resource s " +
             "WHERE :status is null or s.status = :status", nativeQuery = true)
     Page<IResource> findResourcesByStatus(@Param("status") Status status, Pageable pageable);
+
+    long countByStatus(Status status);
 }

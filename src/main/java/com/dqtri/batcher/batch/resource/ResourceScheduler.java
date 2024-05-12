@@ -21,18 +21,18 @@ public class ResourceScheduler {
     private final ApplicationContext applicationContext;
     private final JobLauncher jobLauncher;
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "${batch-job.resource.scheduler.cron:0 0 0 * * *}")
     @AuditAction(value = "resource_job_scheduled", type = ActionType.SCHEDULER)
     public void scheduled() throws Exception {
         Date now = new Date();
-        log.info(String.format("ResourceJob scheduled at: %s", now));
+        log.info(String.format("### ResourceJob scheduled at: %s ###", now));
         Job jobToRun = applicationContext.getBean("resourceJob", Job.class);
         jobLauncher.run(jobToRun, getJobParameters(now));
     }
 
     private JobParameters getJobParameters(Date now) {
         JobParametersBuilder jobParamsBuilder = new JobParametersBuilder();
-        jobParamsBuilder.addDate("date", now);
+        jobParamsBuilder.addDate("executed_date", now);
         return jobParamsBuilder.toJobParameters();
     }
 }

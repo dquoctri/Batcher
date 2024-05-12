@@ -37,7 +37,7 @@ public class SeedConfiguration {
     @AuditAction(value = "SEEDING_BOOKS", type = ActionType.SYSTEM)
     public CommandLineRunner bookCommandLineRunner() {
         return args -> {
-            log.info("Seeding books is running.....");
+            log.info("Book seeding is running.....");
             Book b1 = new Book("Book A");
             Book b2 = new Book("Book B");
             Book b3 = new Book("Book C");
@@ -57,7 +57,7 @@ public class SeedConfiguration {
     @AuditAction(value = "SEEDING_RESOURCES", type = ActionType.SYSTEM)
     public CommandLineRunner resourceCommandLineRunner() {
         return args -> {
-            log.info("Seeding resources is running.....");
+            log.info("Resource seeding is running.....");
             Resource r1 = new Resource("Resource R1", Status.ACTIVE);
             Resource r2 = new Resource("Resource R2", Status.LOCKED);
             Resource r3 = new Resource("Resource R3", Status.DELETED);

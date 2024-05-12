@@ -44,16 +44,16 @@ public class BatchJobConfiguration {
         simpleAsyncTaskExecutor.setTaskTerminationTimeout(144);
         simpleAsyncTaskExecutor.setConcurrencyLimit(5);
         simpleAsyncTaskExecutor.setThreadPriority(MIN_PRIORITY);
-//        simpleAsyncTaskExecutor.setTaskDecorator(new TaskDecorator() {
-//            @Override
-//            public Runnable decorate(Runnable runnable) {
-//                AuditInfo audit = AuditInfoHolder.getInstance().getCurrent();
-//                return () -> {
-//                    AuditInfoHolder.getInstance().setCurrentContext(audit);
-//                    runnable.run();
-//                };
-//            }
-//        });
+        simpleAsyncTaskExecutor.setTaskDecorator(new TaskDecorator() {
+            @Override
+            public Runnable decorate(Runnable runnable) {
+                AuditInfo audit = AuditInfoHolder.getInstance().getCurrent();
+                return () -> {
+                    AuditInfoHolder.getInstance().setCurrentContext(audit);
+                    runnable.run();
+                };
+            }
+        });
         return simpleAsyncTaskExecutor;
     }
 

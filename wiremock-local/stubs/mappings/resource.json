@@ -1,0 +1,18 @@
+{
+  "request": {
+    "urlPattern": "/api/v1/resources\\?status=([a-zA-Z]*)",
+    "method": "GET"
+  },
+  "response": {
+    "bodyFileName": "resource.json",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "status": 200,
+    "fixedDelayMilliseconds": 200,
+    "transformers": ["response-template"],
+    "transformerParameters": {
+      "disableBodyFileTemplating": false
+    }
+  }
+}

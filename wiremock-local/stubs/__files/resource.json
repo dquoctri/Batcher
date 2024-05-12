@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "content": "Resource {{randomValue length=3 type='ALPHANUMERIC' uppercase=true}}",
+    "status": "{{request.query.status}}"
+  },
+  {
+    "id": 2,
+    "content": "Resource {{hostname}}",
+    "status": "{{{pickRandom 'DELETED' 'BLOCKED' 'ACTIVE'}}}"
+  },
+  {
+    "id": 3,
+    "content": "Resource {{randomValue length=3 type='ALPHANUMERIC' uppercase=false}}",
+    "status": "{{request.query.status}}"
+  },
+  {
+    "id": 4,
+    "content": "Resource {{random 'Name.first_name'}}",
+    "status": "DELETED"
+  },
+  {
+    "id": 5,
+    "content": "Resource {{random 'PhoneNumber.phone_number' }}",
+    "status": "BLOCKED"
+  },
+  {
+    "id": 6,
+    "content": "Resource {{randomValue type='UUID'}}",
+    "status": "ACTIVE"
+  },
+  {
+    "id": "{{randomInt lower=12 upper=20}}",
+    "content": "Resource {{randomValue length=32 type='HEXADECIMAL' uppercase=true}}",
+    "status": "ACTIVE"
+  },
+  {
+    "id": "{{{pickRandom '9' '10' '12'}}}",
+    "content": "Resource {{now format='yyyy-MM-dd HH:mm:ss.SSS\'Z\''}}",
+    "status": "ACTIVE"
+  }
+]
