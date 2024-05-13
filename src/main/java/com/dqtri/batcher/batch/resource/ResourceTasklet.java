@@ -5,6 +5,7 @@ import com.dqtri.batcher.client.EmailSender;
 import com.dqtri.batcher.client.ResourceClient;
 import com.dqtri.batcher.client.ResourceDto;
 import com.dqtri.batcher.model.enums.Status;
+import com.dqtri.batcher.repository.ResourceRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
@@ -28,6 +29,7 @@ import java.util.List;
 @Component
 public class ResourceTasklet implements Tasklet, StepExecutionListener {
 
+    private final ResourceRepository resourceRepository;
     private final ResourceClient resourceClient;
     private final EmailSender emailSender;
 
@@ -38,7 +40,8 @@ public class ResourceTasklet implements Tasklet, StepExecutionListener {
             List<ResourceDto> resourceDtos = objectMapper.readValue(response.body().asInputStream(),
                     new TypeReference<List<ResourceDto>>() {});
             int size = resourceDtos.size();
-            EmailDto emailDto = createEmailDto(size);
+            long l = resourceRepository.countByStatus(Status.ACTIVE);
+            EmailDto emailDto = createEmailDto(l);
             emailSender.send(emailDto);
         } catch (Exception e){
             log.error("Fetch data error", e);

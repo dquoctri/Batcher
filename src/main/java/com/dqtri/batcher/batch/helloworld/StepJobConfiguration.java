@@ -89,7 +89,7 @@ public class StepJobConfiguration {
         return items -> {
             logger.info("Writing number of items: {}", items.size()); //5 items are processed within each transaction
             logger.info("Writing items: {}", items); //the list of aggregated items is passed to the ItemWriter
-            throw new RuntimeException("Something's wrong!");
+//            throw new RuntimeException("Something's wrong!");
         };
     }
 
@@ -97,7 +97,7 @@ public class StepJobConfiguration {
     @Bean
     public ItemProcessor<String, String> processor() {
         return item -> {
-            logger.debug("Processor item: {}", item);
+            logger.info("Processor item: {}", item);
             return item + "ed";
         };
     }

@@ -32,7 +32,7 @@ public class JobScheduler {
 
     private JobParameters getJobParameters(Date now) {
         JobParametersBuilder jobParamsBuilder = new JobParametersBuilder();
-        jobParamsBuilder.addDate("date", now);
+        jobParamsBuilder.addDate("executed_date", now);
         return jobParamsBuilder.toJobParameters();
     }
 }

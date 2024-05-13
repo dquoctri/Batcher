@@ -41,13 +41,14 @@ public class HelloWorldJobConfiguration {
                 .start(helloWorldStep)
                 .next(helloDeadlineStep)
                 .listener(jobExecutionListener)
-//                .preventRestart() //Demo 005
+                .preventRestart() //Demo 005
                 .build();
     }
 
     @Bean
     public Step helloWorldStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return new StepBuilder("Hello world step", jobRepository).tasklet((contribution, chunkContext) -> {
+        return new StepBuilder("Hello world step", jobRepository)
+                .tasklet((contribution, chunkContext) -> {
             log.info("Hello world!");
             return RepeatStatus.FINISHED;
         }, transactionManager).build();
@@ -57,7 +58,8 @@ public class HelloWorldJobConfiguration {
     @Bean
     public Step helloDeadlineStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         return new StepBuilder("Hello Deadline step", jobRepository)
-                .tasklet(this::helloDeadlineTasklet, transactionManager).build();
+                .tasklet(this::helloDeadlineTasklet, transactionManager)
+                .build();
     }
 
     private RepeatStatus helloDeadlineTasklet(StepContribution contribution, ChunkContext chunkContext) throws InterruptedException {
@@ -66,6 +68,7 @@ public class HelloWorldJobConfiguration {
         SimpleDateFormat formatter = new SimpleDateFormat(ISO8601_DATE_PATTERN, Locale.ENGLISH);
         log.info("Hello Deadline! " + formatter.format(executedDate));
 //        Thread.sleep(14400); //TODO: just for fake a processing
+//        throw new  RuntimeException("Something's wrong!");
         log.info("Bye Deadline! " + formatter.format(new Date()));
         return RepeatStatus.FINISHED;
     }

@@ -54,7 +54,6 @@ public class BatchJobController implements BatchJobOperations {
     public void triggerBatchJobAsync(String name, Map<String, String> params) throws Exception {
         try {
             Job jobToRun = applicationContext.getBean(name, Job.class);
-            //AuditInfo audit = AuditInfoHolder.getInstance().getCurrent();
             taskExecutorJobLauncher.run(jobToRun, buildJobParameters(jobToRun, params));
         } catch (BeansException ex) {
             throw new EntityNotFoundException(String.format(NOT_FOUND_JOB_NAME_MSG, name));

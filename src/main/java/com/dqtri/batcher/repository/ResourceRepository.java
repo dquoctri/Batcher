@@ -16,13 +16,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ResourceRepository extends JpaRepository<Resource, Long> {
+public interface ResourceRepository extends JpaRepository<Resource, Long>, ResourceRepositoryCustom {
 
-    @Query(value = "SELECT r FROM Resource r " +
-            "WHERE :status is null or r.status = :status",
-        countQuery = "SELECT COUNT(r.pk) FROM Resource r " +
-                "WHERE :status IS NULL OR r.status = :status"
-    )
+//    @Query(value = "SELECT r FROM Resource r " +
+//            "WHERE :status is null or r.status = :status",
+//        countQuery = "SELECT COUNT(r.pk) FROM Resource r " +
+//                "WHERE :status IS NULL OR r.status = :status"
+//    )
     Page<Resource> findByStatus(@Param("status") Status status, Pageable pageable);
 
     @Query(value = "SELECT s.pk, s.content, s.status FROM resource s " +

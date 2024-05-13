@@ -15,6 +15,7 @@ import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.core.annotation.OnReadError;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.data.RepositoryItemReader;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 @StepScope
 @Component
 public class ResourceReader extends RepositoryItemReader<Resource> {
+    @Qualifier("specialCustomImpl")
     private final ResourceRepository resourceRepository;
 
     @Override
